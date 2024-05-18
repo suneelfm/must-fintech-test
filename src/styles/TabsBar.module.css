@@ -1,0 +1,24 @@
+.tabsWrapper {
+  padding-top: 8px;
+  border-top: 1px solid #d7d8da;
+}
+
+.tabGroup {
+  height: 35px;
+  background-color: #ebeef3;
+  border-radius: 8px;
+  display: flex;
+  overflow: auto;
+}
+
+.tab {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  padding: 0px 18px;
+  color: #b1b4bb;
+  white-space: nowrap;
+  cursor: pointer;
+}
