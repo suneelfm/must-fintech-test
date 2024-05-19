@@ -46,3 +46,14 @@
 .dropdownMenuItem:hover {
   background-color: #ebeef3;
 }
+
+.button {
+  border-width: 2px;
+  border-style: solid;
+  font-size: 12px;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+  white-space: nowrap;
+  height: 32px;
+}
