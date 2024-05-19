@@ -57,3 +57,11 @@
   white-space: nowrap;
   height: 32px;
 }
+
+.approvalStatusTag {
+  font-size: 12px;
+  border-radius: 10px;
+  width: fit-content;
+  padding: 1px 10px;
+  font-weight: 500;
+}
