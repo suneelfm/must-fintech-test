@@ -9,3 +9,14 @@ export const TABS = [
   { id: "consultation_history_management", label: "상담내역 관리" },
   { id: "inquiry_history", label: "1:1문의내역 조회 " },
 ];
+
+export const TABLE_COLUMNS = [
+  { id: "existingType", header: "기존유형", minWidth: "80px" },
+  { id: "applicationType", header: "신청유형", minWidth: "80px" },
+  { id: "submittedDocs", header: "제출서류", minWidth: "80px" },
+  { id: "applicationDate", header: "신청일시", minWidth: "140px" },
+  { id: "approval", header: "승인여부", minWidth: "80px" },
+  { id: "reasonForReject", header: "승인거부 사유", minWidth: "400px" },
+  { id: "approvalDate", header: "승인일시", minWidth: "140px" },
+  { id: "administrator", header: "관리자", minWidth: "80px" },
+];
