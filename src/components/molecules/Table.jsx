@@ -7,7 +7,6 @@ export default function Table({ columns, rows }) {
       <table>
         <thead>
           <tr className={styles.head}>
-            <th>No</th>
             {columns?.map(({ header, id, minWidth }) => (
               <th key={id} style={{ minWidth }}>
                 {header}
@@ -22,7 +21,6 @@ export default function Table({ columns, rows }) {
               className={styles.row}
               style={{ backgroundColor: i % 2 === 0 ? "#ffffff" : "#F9F9FB" }}
             >
-              <td>{i + 1}</td>
               {columns?.map(({ id }) => (
                 <td
                   key={id}

@@ -10,7 +10,23 @@ export const TABS = [
   { id: "inquiry_history", label: "1:1문의내역 조회 " },
 ];
 
+export const APPROVAL_STATUSES = [
+  "승인여부 전체",
+  "승인대기",
+  "승인완료",
+  "승인거부",
+];
+
+export const SHORT_OPTIONS = ["신청일시순", "승인일시순"];
+
+export const ITEMS_PER_PAGE_OPTIONS = [
+  "50개씩 보기",
+  "25개씩 보기",
+  "10개씩 보기",
+];
+
 export const TABLE_COLUMNS = [
+  { id: "id", header: "NO", minWidth: "30px" },
   { id: "existingType", header: "기존유형", minWidth: "80px" },
   { id: "applicationType", header: "신청유형", minWidth: "80px" },
   { id: "submittedDocs", header: "제출서류", minWidth: "80px" },

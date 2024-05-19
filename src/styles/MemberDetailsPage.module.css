@@ -1,0 +1,33 @@
+.pageWrapper {
+  padding: 30px 20px 10px 20px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.sectionTitle {
+  color: #0b101a;
+  font-size: 16px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.itemsData {
+  color: #5a616a;
+  font-weight: 500;
+  font-size: 12px;
+  white-space: nowrap;
+  margin: 0 8px;
+}
+.itemsData > span {
+  color: #ff4d4f;
+  text-decoration: underline;
+}
+
+.selectedItemsCount {
+  font-size: 12px;
+  color: #5a616a;
+  font-weight: 500;
+}
