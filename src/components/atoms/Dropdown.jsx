@@ -1,7 +1,13 @@
 import React, { useState } from "react";
 import styles from "../../styles/Atoms.module.css";
+import Icon from "./Icon";
 
-export default function Dropdown({ options, value, onDropdownChange }) {
+export default function Dropdown({
+  options,
+  value,
+  label = "",
+  onDropdownChange,
+}) {
   const [open, setOpen] = useState(false);
   return (
     <div
@@ -10,7 +16,13 @@ export default function Dropdown({ options, value, onDropdownChange }) {
       onBlur={() => setOpen(false)}
       tabIndex={0}
     >
-      {value}
+      {value ?? label}
+      <div className={styles.dropdownIcon}>
+        <Icon
+          name={"down"}
+          style={{ transform: `rotate(${open ? 180 : 0}deg)` }}
+        />
+      </div>
       {open && (
         <div className={styles.dropdownMenu}>
           {options?.map((option, i) => (
@@ -26,7 +38,7 @@ export default function Dropdown({ options, value, onDropdownChange }) {
               }
               className={styles.dropdownMenuItem}
               onClick={() => {
-                onDropdownChange(option);
+                onDropdownChange?.(option);
               }}
             >
               {option}
