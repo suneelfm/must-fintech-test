@@ -15,6 +15,7 @@ import ApprovalStatusTag from "../atoms/ApprovalStatusTag";
 import FirstPageIcon from "../atoms/FirstPageIcon";
 import LastPageIcon from "../atoms/LastPageIcon";
 import MessageDialogue from "../molecules/MessageDialogue";
+import { useParams } from "react-router-dom";
 
 export default function MemberDetailsPage() {
   const [approvalStatus, setApprovalStatus] = useState(APPROVAL_STATUSES[0]);
@@ -34,6 +35,8 @@ export default function MemberDetailsPage() {
   const itemsWaitingForApproval = data.filter(
     (data) => data.approval === "승인대기"
   ).length;
+
+  const { section } = useParams();
 
   useEffect(() => {
     const pageItems = data.slice(
@@ -116,6 +119,13 @@ export default function MemberDetailsPage() {
       setDialogue({ message: "", type: "" });
     }
   };
+
+  if (section !== "investment_type")
+    return (
+      <div style={{ padding: "50px", textAlign: "center" }}>
+        Not developed as not part of requirement
+      </div>
+    );
 
   return (
     <div className={styles.pageWrapper}>
@@ -255,18 +265,18 @@ export default function MemberDetailsPage() {
             "& .css-10w330c-MuiButtonBase-root-MuiPaginationItem-root.Mui-selected":
               {
                 backgroundColor: "#2A3958 !important",
-                color: "#ffffff",
-                fontSize: "14px",
-                fontWeight: "600",
+                color: "#ffffff !important",
+                fontSize: "14px !important",
+                fontWeight: "600 !important",
               },
             "& .css-10w330c-MuiButtonBase-root-MuiPaginationItem-root": {
-              color: "#A1A1A1",
-              fontSize: "14px",
-              fontWeight: "600",
+              color: "#A1A1A1 !important",
+              fontSize: "14px !important",
+              fontWeight: "600 !important",
             },
             "& .css-1v2lvtn-MuiPaginationItem-root": {
-              color: "#A1A1A1",
-              fontWeight: "600",
+              color: "#A1A1A1 !important",
+              fontWeight: "600 !important",
             },
           }}
         />
