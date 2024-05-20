@@ -269,13 +269,10 @@ export default function MemberDetailsPage() {
                 fontSize: "14px !important",
                 fontWeight: "600 !important",
               },
-            "& .css-10w330c-MuiButtonBase-root-MuiPaginationItem-root": {
-              color: "#A1A1A1 !important",
+            "& .css-18lqwt2.Mui-selected": {
+              backgroundColor: "#2A3958 !important",
+              color: "#ffffff !important",
               fontSize: "14px !important",
-              fontWeight: "600 !important",
-            },
-            "& .css-1v2lvtn-MuiPaginationItem-root": {
-              color: "#A1A1A1 !important",
               fontWeight: "600 !important",
             },
           }}
