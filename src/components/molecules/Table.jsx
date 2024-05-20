@@ -1,12 +1,31 @@
 import React from "react";
 import styles from "../../styles/Table.module.css";
 
-export default function Table({ columns, rows }) {
+export default function Table({
+  columns,
+  rows = [],
+  selectedRows = [],
+  onRowSelect,
+}) {
   return (
     <div>
       <table>
         <thead>
           <tr className={styles.head}>
+            <th>
+              <input
+                type="checkbox"
+                style={{ backgroundColor: "#ffffff" }}
+                className={styles.checkbox}
+                checked={selectedRows.length === rows.length}
+                onChange={(e) =>
+                  onRowSelect(
+                    e,
+                    rows.map((row) => row.id)
+                  )
+                }
+              />
+            </th>
             {columns?.map(({ header, id, minWidth }) => (
               <th key={id} style={{ minWidth }}>
                 {header}
@@ -21,6 +40,19 @@ export default function Table({ columns, rows }) {
               className={styles.row}
               style={{ backgroundColor: i % 2 === 0 ? "#ffffff" : "#F9F9FB" }}
             >
+              <td>
+                <input
+                  type="checkbox"
+                  className={styles.checkbox}
+                  checked={selectedRows?.includes(row.id)}
+                  onChange={(e) => onRowSelect(e, row.id)}
+                  style={
+                    i % 3 === 0
+                      ? { backgroundColor: "#ffffff" }
+                      : { backgroundColor: "#DDE0E5" }
+                  }
+                />
+              </td>
               {columns?.map(({ id }) => (
                 <td
                   key={id}
