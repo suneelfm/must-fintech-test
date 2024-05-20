@@ -25,6 +25,8 @@ export const ITEMS_PER_PAGE_OPTIONS = [
   "10개씩 보기",
 ];
 
+export const CHANGE_STATUS = ["승인완료", "승인거부"];
+
 export const TABLE_COLUMNS = [
   { id: "id", header: "NO", minWidth: "30px" },
   { id: "existingType", header: "기존유형", minWidth: "80px" },

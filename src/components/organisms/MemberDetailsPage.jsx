@@ -4,6 +4,7 @@ import { Grid, Pagination, PaginationItem } from "@mui/material";
 import Dropdown from "../atoms/Dropdown";
 import {
   APPROVAL_STATUSES,
+  CHANGE_STATUS,
   ITEMS_PER_PAGE_OPTIONS,
   SHORT_OPTIONS,
   TABLE_COLUMNS,
@@ -19,7 +20,7 @@ import { useParams } from "react-router-dom";
 
 export default function MemberDetailsPage() {
   const [approvalStatus, setApprovalStatus] = useState(APPROVAL_STATUSES[0]);
-  const [shortBy, setShortBy] = useState(SHORT_OPTIONS[0]);
+  const [sortBy, setSortBy] = useState(SHORT_OPTIONS[0]);
   const [itemsPerPage, setItemsPerPage] = useState(ITEMS_PER_PAGE_OPTIONS[0]);
   const [selectedItems, setSelectedItems] = useState([]);
   const [pageNo, setPageNo] = useState(1);
@@ -39,12 +40,24 @@ export default function MemberDetailsPage() {
   const { section } = useParams();
 
   useEffect(() => {
-    const pageItems = data.slice(
+    const SORT_BY_KEY = {
+      신청일시순: "applicationDate",
+      승인일시순: "approvalDate",
+    };
+    const filtered =
+      approvalStatus === "승인여부 전체"
+        ? data
+        : data.filter((d) => d.approval === approvalStatus);
+    const pageItems = filtered.slice(
       (pageNo - 1) * parseInt(itemsPerPage),
       pageNo * parseInt(itemsPerPage)
     );
-    setApplicationList(pageItems);
-  }, [pageNo, itemsPerPage]);
+    const sorted = pageItems.sort(
+      (a, b) =>
+        new Date(b[SORT_BY_KEY[sortBy]]) - new Date(a[SORT_BY_KEY[sortBy]])
+    );
+    setApplicationList(sorted);
+  }, [pageNo, itemsPerPage, approvalStatus, sortBy]);
 
   const handleRowSelection = (e, rowId) => {
     const isChecked = e.target.checked;
@@ -174,9 +187,9 @@ export default function MemberDetailsPage() {
             marginLeft={"5px"}
           >
             <Dropdown
-              value={shortBy}
+              value={sortBy}
               options={SHORT_OPTIONS}
-              onDropdownChange={(value) => setShortBy(value)}
+              onDropdownChange={(value) => setSortBy(value)}
             />
           </Grid>
           <Grid
@@ -214,7 +227,7 @@ export default function MemberDetailsPage() {
             <Dropdown
               value={changeStatus}
               onDropdownChange={(value) => setChangeStatus(value)}
-              options={["승인완료", "승인거부"]}
+              options={CHANGE_STATUS}
               width="100px"
               label="승인상태 변경"
             />
