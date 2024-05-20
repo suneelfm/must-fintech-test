@@ -14,6 +14,7 @@ import mockData from "../../data/applicationList.json";
 import ApprovalStatusTag from "../atoms/ApprovalStatusTag";
 import FirstPageIcon from "../atoms/FirstPageIcon";
 import LastPageIcon from "../atoms/LastPageIcon";
+import MessageDialogue from "../molecules/MessageDialogue";
 
 export default function MemberDetailsPage() {
   const [approvalStatus, setApprovalStatus] = useState(APPROVAL_STATUSES[0]);
@@ -22,6 +23,12 @@ export default function MemberDetailsPage() {
   const [selectedItems, setSelectedItems] = useState([]);
   const [pageNo, setPageNo] = useState(1);
   const [applicationList, setApplicationList] = useState([]);
+  const [dialogue, setDialogue] = useState({
+    message: "",
+    type: "",
+    isCancelRequired: false,
+  });
+  const [changeStatus, setChangeStatus] = useState(null);
   const data = mockData.map((d, i) => ({ ...d, id: i + 1 }));
   const totalItems = data.length;
   const itemsWaitingForApproval = data.filter(
@@ -54,6 +61,59 @@ export default function MemberDetailsPage() {
     } else {
       const filtered = selectedItems.filter((item) => item !== rowId);
       setSelectedItems(filtered);
+    }
+  };
+
+  const handleSave = () => {
+    if (!selectedItems.length) {
+      setDialogue({
+        message: "선택된 신청건이 없습니다.",
+        type: "warn",
+        isCancelRequired: false,
+      });
+      return;
+    }
+    const existingApprove = selectedItems.filter(
+      (item) => data.find((d) => d.approval === "승인완료").id === item
+    );
+    if (existingApprove.length) {
+      setDialogue({
+        message: "이미 승인 완료된 회원입니다.",
+        type: "warn",
+        isCancelRequired: false,
+      });
+      return;
+    }
+    const existingRejected = selectedItems.filter(
+      (item) => data.find((d) => d.approval === "승인거부").id === item
+    );
+    if (existingRejected.length) {
+      setDialogue({
+        message: "이미 승인 거부된 회원입니다.",
+        type: "warn",
+        isCancelRequired: false,
+      });
+      return;
+    }
+    if (changeStatus) {
+      setDialogue({
+        message: `선택된 ${selectedItems.length}건의 승인상태를 변경하시겠습니까?`,
+        type: "warn",
+        isCancelRequired: true,
+      });
+      return;
+    }
+  };
+
+  const handleDialogueAccept = () => {
+    if (dialogue.message.includes("건의 승인상태를 변경하시겠습니까?")) {
+      setDialogue({
+        message: "저장되었습니다.",
+        type: "success",
+        isCancelRequired: false,
+      });
+    } else {
+      setDialogue({ message: "", type: "" });
     }
   };
 
@@ -142,12 +202,14 @@ export default function MemberDetailsPage() {
           </span>
           <Grid width={"150px"} paddingRight={"5px"} marginLeft={"15px"}>
             <Dropdown
+              value={changeStatus}
+              onDropdownChange={(value) => setChangeStatus(value)}
               options={["승인완료", "승인거부"]}
               width="100px"
               label="승인상태 변경"
             />
           </Grid>
-          <Button>저장</Button>
+          <Button onClick={handleSave}>저장</Button>
         </Grid>
       </Grid>
       <Grid
@@ -209,6 +271,15 @@ export default function MemberDetailsPage() {
           }}
         />
       </Grid>
+      {dialogue.message && (
+        <MessageDialogue
+          messageType={dialogue.type}
+          message={dialogue.message}
+          onClose={() => setDialogue({ message: "", type: "" })}
+          onAccept={handleDialogueAccept}
+          cancelRequired={dialogue.isCancelRequired}
+        />
+      )}
     </div>
   );
 }
