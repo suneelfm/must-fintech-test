@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styles from "../../styles/MemberDetailsPage.module.css";
-import { Grid, Pagination } from "@mui/material";
+import { Grid, Pagination, PaginationItem } from "@mui/material";
 import Dropdown from "../atoms/Dropdown";
 import {
   APPROVAL_STATUSES,
@@ -12,6 +12,8 @@ import Button from "../atoms/Button";
 import Table from "../molecules/Table";
 import mockData from "../../data/applicationList.json";
 import ApprovalStatusTag from "../atoms/ApprovalStatusTag";
+import FirstPageIcon from "../atoms/FirstPageIcon";
+import LastPageIcon from "../atoms/LastPageIcon";
 
 export default function MemberDetailsPage() {
   const [approvalStatus, setApprovalStatus] = useState(APPROVAL_STATUSES[0]);
@@ -33,6 +35,27 @@ export default function MemberDetailsPage() {
     );
     setApplicationList(pageItems);
   }, [pageNo, itemsPerPage]);
+
+  const handleRowSelection = (e, rowId) => {
+    const isChecked = e.target.checked;
+    if (Array.isArray(rowId)) {
+      if (isChecked) {
+        setSelectedItems(rowId);
+        return;
+      } else {
+        setSelectedItems([]);
+        return;
+      }
+    }
+    const selectedItemsCopy = [...selectedItems];
+    if (isChecked) {
+      selectedItemsCopy.push(rowId);
+      setSelectedItems(selectedItemsCopy);
+    } else {
+      const filtered = selectedItems.filter((item) => item !== rowId);
+      setSelectedItems(filtered);
+    }
+  };
 
   return (
     <div className={styles.pageWrapper}>
@@ -145,6 +168,8 @@ export default function MemberDetailsPage() {
             ),
             approval: <ApprovalStatusTag tag={data.approval} />,
           }))}
+          selectedRows={selectedItems}
+          onRowSelect={handleRowSelection}
         />
       </Grid>
       <Grid container justifyContent={"center"} mt={1}>
@@ -155,10 +180,19 @@ export default function MemberDetailsPage() {
           onChange={(e, page) => setPageNo(page)}
           showFirstButton
           showLastButton
+          renderItem={(item) => (
+            <PaginationItem
+              {...item}
+              slots={{
+                first: FirstPageIcon,
+                last: LastPageIcon,
+              }}
+            />
+          )}
           sx={{
             "& .css-10w330c-MuiButtonBase-root-MuiPaginationItem-root.Mui-selected":
               {
-                backgroundColor: "#2A3958",
+                backgroundColor: "#2A3958 !important",
                 color: "#ffffff",
                 fontSize: "14px",
                 fontWeight: "600",

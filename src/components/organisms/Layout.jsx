@@ -1,9 +1,14 @@
-import React from "react";
-import { Outlet } from "react-router-dom";
+import React, { useEffect } from "react";
+import { Outlet, useNavigate } from "react-router-dom";
 import styles from "../../styles/Layout.module.css";
 import TabsBar from "../molecules/TabsBar";
 
 export default function Layout() {
+  const navigate = useNavigate();
+  useEffect(() => {
+    navigate("/investment_type");
+  }, []);
+
   return (
     <div className={styles.viewport}>
       <div className={styles.header}>
